@@ -4,13 +4,28 @@
     "slug": "calculator-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "assetBundlePatterns": ["**/*"],
-    "ios": {
-      "supportsTabletMode": true,
-      "bundleIdentifier": "com.calculator.app"
+    "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
     },
     "android": {
-      "package": "com.calculator.app"
-    }
+      "package": "com.calculator.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#0f172a"
+      }
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.calculator.app"
+    },
+    "web": {
+      "favicon": "./assets/images/icon.png"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "scheme": "calculatorapp"
   }
 }

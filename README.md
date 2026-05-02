@@ -1,58 +1,59 @@
-# Calculator (Expo)
+# Calculator App
 
-This is a small Expo React Native calculator app configured for Expo SDK 55 and ready to run on your phone via Expo Go.
+![Expo](https://img.shields.io/badge/Expo-SDK%2055-000020?style=flat-square&logo=expo)
+![React Native](https://img.shields.io/badge/React%20Native-0.83-61DAFB?style=flat-square&logo=react)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+
+A clean, phone-ready calculator built with Expo and React Native. It is set up for quick testing in Expo Go and has the basic public-repo essentials in place: README, license, CI, and app branding.
+
+## What it does
+
+- Basic arithmetic: add, subtract, multiply, divide
+- Decimal input and simple correction with backspace
+- Mobile-first layout that fits nicely on a phone screen
+- Expo Go friendly setup for fast testing on a physical device
 
 ## Quick start
 
 Prerequisites:
 
-- Node.js (18+ recommended)
+- Node.js 18+
 - npm
 - Expo Go on your phone
 
-Install dependencies:
+Install and run:
 
 ```bash
 npm install --legacy-peer-deps
-```
-
-Run Metro and open in Expo Go:
-
-```bash
 npx expo start --clear
 ```
 
-Scan the QR code in the Expo devtools or open the project in Expo Go.
+Scan the QR code in the Expo Dev Tools or open the app from Expo Go.
 
-### Project layout
+## Project files
 
-- `App.js` — main app UI and logic
-- `babel.config.js` — configured with `babel-preset-expo` and private/class plugins
-- `app.json` — Expo config
-- `EXPO_SETUP.md` — device setup and troubleshooting notes
+- `App.js` — calculator UI and logic
+- `app.json` — Expo app metadata and icon/splash configuration
+- `babel.config.js` — Babel preset and private/class plugin setup
+- `EXPO_SETUP.md` — phone setup and troubleshooting notes
+- `.github/workflows/ci.yml` — GitHub Actions check workflow
 
-### CI
+## Repo status
 
-A basic GitHub Actions workflow is included at `.github/workflows/ci.yml` that verifies dependencies install and runs basic sanity checks.
+- Public GitHub repository: `Amdaneji/calculator-app`
+- License: MIT
+- Expo SDK: 55
 
-### License
+## Publishing commands
 
-This repo includes an MIT license by default. Change or remove as you prefer.
-
-### How to publish this repository (commands you can run locally)
-
-If you have the GitHub CLI (`gh`) configured and want to push from here, provide confirmation and a repository name. Otherwise run:
+If you need to point another local clone at this repository:
 
 ```bash
-git init
+git remote add origin https://github.com/Amdaneji/calculator-app.git
 git branch -M main
-git add .
-git commit -m "chore: initial import — calculator app, CI, README"
-# Create a repo on GitHub (replace USER/REPO)
-gh repo create USER/REPO --public --source=. --remote=origin --push
-# Or, if creating the repo manually, add the remote then push:
-git remote add origin https://github.com/USER/REPO.git
 git push -u origin main
 ```
 
-If you'd like, I can create the GitHub repo for you (requires `gh` or a personal access token). Tell me the repo name and whether it should be public.
+## Notes
+
+The project is intentionally lightweight so it can be opened, installed, and tested quickly on a real device. If you want, I can next add screenshots, a changelog, or App Store style store text.
