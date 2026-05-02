@@ -1,0 +1,16 @@
+{
+  "expo": {
+    "name": "Calculator App",
+    "slug": "calculator-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTabletMode": true,
+      "bundleIdentifier": "com.calculator.app"
+    },
+    "android": {
+      "package": "com.calculator.app"
+    }
+  }
+}
