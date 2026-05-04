@@ -42,9 +42,9 @@ Scan the QR code in the Expo Dev Tools or open the app from Expo Go.
 
 You do not need the Play Store to share this app.
 
-- For fast testing, use Expo Go and scan the QR code from `npx expo start --clear`.
-- For an installable Android app, build a standalone APK with EAS and upload it to GitHub Releases.
-- For Play Store publishing later, build an AAB from the same EAS config.
+- **Fast testing**: Use Expo Go and scan the QR code from `npx expo start --clear`.
+- **Download the app**: Get the latest Android APK from [Releases](https://github.com/Amdaneji/calculator-app/releases).
+- **Install on Android**: Download the `.apk` file from Releases and open it on your phone.
 
 ### Build steps
 
@@ -68,6 +68,8 @@ eas build -p android --profile preview
 ```
 
 That produces an APK for sharing directly, or an installable build link that you can attach to a GitHub release.
+
+See [RELEASE_GUIDE.md](RELEASE_GUIDE.md) for the full publishing workflow.
 
 ## Notes
 
