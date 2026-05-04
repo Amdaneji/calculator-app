@@ -4,14 +4,14 @@
 ![React Native](https://img.shields.io/badge/React%20Native-0.83-61DAFB?style=flat-square&logo=react)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
-A clean, phone-ready calculator built with Expo and React Native. It is set up for quick testing in Expo Go and has the basic public-repo essentials in place: README, license, CI, and app branding.
+A polished, high-end calculator experience built with Expo and React Native. The interface is designed to feel refined, fast, and premium on a physical phone, with a clean layout and minimal distractions.
 
 ## What it does
 
-- Basic arithmetic: add, subtract, multiply, divide
-- Decimal input and simple correction with backspace
-- Mobile-first layout that fits nicely on a phone screen
-- Expo Go friendly setup for fast testing on a physical device
+- Precision arithmetic: add, subtract, multiply, divide
+- Smooth decimal entry with backspace support
+- Elegant mobile-first layout tuned for quick, comfortable use
+- Expo Go ready for immediate testing on a physical device
 
 ## Quick start
 
@@ -56,4 +56,4 @@ git push -u origin main
 
 ## Notes
 
-The project is intentionally lightweight so it can be opened, installed, and tested quickly on a real device. If you want, I can next add screenshots, a changelog, or App Store style store text.
+The project is intentionally streamlined so it opens quickly and feels polished on a real device. If you want, I can next add screenshots, a changelog, or App Store-style store text.
