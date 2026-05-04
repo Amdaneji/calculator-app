@@ -69,22 +69,6 @@ eas build -p android --profile preview
 
 That produces an APK for sharing directly, or an installable build link that you can attach to a GitHub release.
 
-## Repo status
-
-- Public GitHub repository: `Amdaneji/calculator-app`
-- License: MIT
-- Expo SDK: 55
-
-## Publishing commands
-
-If you need to point another local clone at this repository:
-
-```bash
-git remote add origin https://github.com/Amdaneji/calculator-app.git
-git branch -M main
-git push -u origin main
-```
-
 ## Notes
 
 The project is intentionally streamlined so it opens quickly and feels polished on a real device. If you want, I can next add screenshots, a changelog, or App Store-style store text.
