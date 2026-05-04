@@ -38,6 +38,37 @@ Scan the QR code in the Expo Dev Tools or open the app from Expo Go.
 - `EXPO_SETUP.md` — phone setup and troubleshooting notes
 - `.github/workflows/ci.yml` — GitHub Actions check workflow
 
+## Get the actual app
+
+You do not need the Play Store to share this app.
+
+- For fast testing, use Expo Go and scan the QR code from `npx expo start --clear`.
+- For an installable Android app, build a standalone APK with EAS and upload it to GitHub Releases.
+- For Play Store publishing later, build an AAB from the same EAS config.
+
+### Build steps
+
+Install EAS CLI if needed:
+
+```bash
+npm install -g eas-cli
+```
+
+Sign in and configure the project once:
+
+```bash
+eas login
+eas build:configure
+```
+
+Create a downloadable Android build:
+
+```bash
+eas build -p android --profile preview
+```
+
+That produces an APK for sharing directly, or an installable build link that you can attach to a GitHub release.
+
 ## Repo status
 
 - Public GitHub repository: `Amdaneji/calculator-app`
