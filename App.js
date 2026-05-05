@@ -7,6 +7,8 @@ export default function App() {
   const [previousValue, setPreviousValue] = useState(null);
   const [operation, setOperation] = useState(null);
   const [waitingForOperand, setWaitingForOperand] = useState(false);
+  const [history, setHistory] = useState('');
+  const [evaluatedResult, setEvaluatedResult] = useState(null);
 
   const handleNumberPress = (num) => {
     if (waitingForOperand) {
@@ -31,14 +33,24 @@ export default function App() {
 
     if (previousValue === null) {
       setPreviousValue(inputValue);
+      setHistory(`${display} ${nextOp}`);
+      setEvaluatedResult(null);
     } else if (operation) {
-      // If user has not started entering the next operand yet, allow changing the operator
+      // If user has not started entering the next operand yet
       if (!waitingForOperand) {
         const result = calculate(previousValue, inputValue, operation);
-        setDisplay(String(result));
+        setEvaluatedResult(result);
         setPreviousValue(result);
+        setHistory(`${previousValue} ${operation} ${display} ${nextOp}`);
+        setDisplay('');
       } else {
-        // just change the operator without computing
+        // change the trailing operator in history
+        if (history) {
+          const newHistory = history.replace(/\s[+\-×÷]$/, ` ${nextOp}`);
+          setHistory(newHistory);
+        } else {
+          setHistory(`${previousValue} ${nextOp}`);
+        }
         setOperation(nextOp);
         return;
       }
@@ -69,6 +81,8 @@ export default function App() {
     if (previousValue !== null && operation) {
       const result = calculate(previousValue, inputValue, operation);
       setDisplay(String(result));
+      setEvaluatedResult(result);
+      setHistory('');
       setPreviousValue(null);
       setOperation(null);
       setWaitingForOperand(true);
@@ -80,6 +94,8 @@ export default function App() {
     setPreviousValue(null);
     setOperation(null);
     setWaitingForOperand(false);
+    setHistory('');
+    setEvaluatedResult(null);
   };
 
   const handleBackspace = () => {
@@ -91,19 +107,25 @@ export default function App() {
   };
 
   // Compute live result (evaluated) only after user begins entering the next operand
-  const liveResult = (previousValue !== null && operation && !waitingForOperand && display !== '')
-    ? (() => {
+  let liveResult = '';
+  if (previousValue !== null && operation) {
+    if (!waitingForOperand && display !== '') {
       const current = parseFloat(display);
       const res = calculate(previousValue, isNaN(current) ? 0 : current, operation);
-      if (!isFinite(res) || isNaN(res)) return 'Error';
-      return Number.isInteger(res) ? String(res) : String(parseFloat(res.toFixed(8)).toString());
-    })()
-    : '';
+      if (!isFinite(res) || isNaN(res)) liveResult = 'Error';
+      else liveResult = Number.isInteger(res) ? String(res) : String(parseFloat(res.toFixed(8)).toString());
+    } else if (waitingForOperand && evaluatedResult !== null) {
+      const res = evaluatedResult;
+      liveResult = Number.isFinite(res) ? (Number.isInteger(res) ? String(res) : String(parseFloat(res.toFixed(8)).toString())) : 'Error';
+    }
+  }
 
   // Main display text: show full expression if there's a pending operation, otherwise show the current input
-  const mainDisplayText = (previousValue !== null && operation)
-    ? `${previousValue} ${operation} ${!waitingForOperand ? display : ''}`.trim()
-    : display;
+  const mainDisplayText = history
+    ? `${history}${!waitingForOperand ? ` ${display}` : ''}`
+    : (previousValue !== null && operation
+      ? `${previousValue} ${operation} ${!waitingForOperand ? display : ''}`.trim()
+      : display);
 
   const Button = ({ onPress, title, style }) => (
     <TouchableOpacity
