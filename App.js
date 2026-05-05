@@ -10,6 +10,33 @@ export default function App() {
   const [history, setHistory] = useState('');
   const [evaluatedResult, setEvaluatedResult] = useState(null);
 
+  if (__DEV__ && !global.__CALC_ERROR_HANDLER_INSTALLED__) {
+    global.__CALC_ERROR_HANDLER_INSTALLED__ = true;
+    const defaultHandler = global.ErrorUtils?.getGlobalHandler?.();
+    global.ErrorUtils?.setGlobalHandler?.((error, isFatal) => {
+      console.error('=== CALC_RUNTIME_ERROR_START ===');
+      console.error(`message: ${error?.message || 'Unknown error'}`);
+      console.error(`isFatal: ${String(isFatal)}`);
+      console.error(`stack: ${error?.stack || 'No stack available'}`);
+      console.error('=== CALC_RUNTIME_ERROR_END ===');
+      if (defaultHandler) defaultHandler(error, isFatal);
+    });
+  }
+
+  const logRuntimeContext = (source, err) => {
+    console.error('=== CALC_RUNTIME_ERROR_START ===');
+    console.error(`source: ${source}`);
+    console.error(`message: ${err?.message || 'Unknown error'}`);
+    console.error(`display: ${display}`);
+    console.error(`history: ${history}`);
+    console.error(`previousValue: ${String(previousValue)}`);
+    console.error(`operation: ${String(operation)}`);
+    console.error(`waitingForOperand: ${String(waitingForOperand)}`);
+    console.error(`evaluatedResult: ${String(evaluatedResult)}`);
+    console.error(`stack: ${err?.stack || 'No stack available'}`);
+    console.error('=== CALC_RUNTIME_ERROR_END ===');
+  };
+
   const handleNumberPress = (num) => {
     if (waitingForOperand) {
       setDisplay(String(num));
@@ -144,7 +171,14 @@ export default function App() {
   const Button = ({ onPress, title, style }) => (
     <TouchableOpacity
       style={[styles.button, style]}
-      onPress={onPress}
+      onPress={() => {
+        try {
+          onPress();
+        } catch (err) {
+          logRuntimeContext(`Button:${title}`, err);
+          throw err;
+        }
+      }}
       activeOpacity={0.7}
     >
       <Text style={styles.buttonText}>{title}</Text>
