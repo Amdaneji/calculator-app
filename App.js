@@ -47,12 +47,15 @@ export default function App() {
         } else {
           setHistory(`${previousValue} ${operation} ${display} ${nextOp}`);
         }
-        setDisplay('');
+        setDisplay('0');
       } else {
-        // change the trailing operator in history
+        // change trailing operator safely without regex replacement
         if (history) {
-          const newHistory = history.replace(/\s[+\-×÷]$/, ` ${nextOp}`);
-          setHistory(newHistory);
+          const tokens = history.trim().split(' ');
+          if (tokens.length > 0) {
+            tokens[tokens.length - 1] = nextOp;
+            setHistory(tokens.join(' '));
+          }
         } else {
           setHistory(`${previousValue} ${nextOp}`);
         }
