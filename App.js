@@ -32,9 +32,16 @@ export default function App() {
     if (previousValue === null) {
       setPreviousValue(inputValue);
     } else if (operation) {
-      const result = calculate(previousValue, inputValue, operation);
-      setDisplay(String(result));
-      setPreviousValue(result);
+      // If user has not started entering the next operand yet, allow changing the operator
+      if (!waitingForOperand) {
+        const result = calculate(previousValue, inputValue, operation);
+        setDisplay(String(result));
+        setPreviousValue(result);
+      } else {
+        // just change the operator without computing
+        setOperation(nextOp);
+        return;
+      }
     }
 
     setWaitingForOperand(true);
@@ -84,7 +91,7 @@ export default function App() {
   };
 
   // Compute live expression and live result (e.g. "12 + 3 = 15")
-  const liveResult = (previousValue !== null && operation && display !== '')
+  const liveResult = (previousValue !== null && operation && !waitingForOperand && display !== '')
     ? (() => {
       const current = parseFloat(display);
       const res = calculate(previousValue, isNaN(current) ? 0 : current, operation);
