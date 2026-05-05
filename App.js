@@ -83,9 +83,18 @@ export default function App() {
     }
   };
 
-  // Compute live expression to show operator and next input (e.g. "12 + 3")
+  // Compute live expression and live result (e.g. "12 + 3 = 15")
+  const liveResult = (previousValue !== null && operation && display !== '')
+    ? (() => {
+      const current = parseFloat(display);
+      const res = calculate(previousValue, isNaN(current) ? 0 : current, operation);
+      if (!isFinite(res) || isNaN(res)) return 'Error';
+      return Number.isInteger(res) ? String(res) : String(parseFloat(res.toFixed(8)).toString());
+    })()
+    : '';
+
   const expression = (previousValue !== null && operation)
-    ? (waitingForOperand ? `${previousValue} ${operation}` : `${previousValue} ${operation} ${display}`)
+    ? `${previousValue} ${operation} ${!waitingForOperand ? display : ''}${liveResult ? ` = ${liveResult}` : ''}`.trim()
     : '';
 
   const Button = ({ onPress, title, style }) => (
@@ -224,6 +233,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingHorizontal: 20,
     paddingBottom: 30,
+    paddingTop: 24,
   },
   display: {
     fontSize: 60,
@@ -231,11 +241,10 @@ const styles = StyleSheet.create({
     fontWeight: '300',
   },
   expression: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#bfbfbf',
-    position: 'absolute',
-    top: 12,
-    right: 20,
+    marginBottom: 6,
+    alignSelf: 'flex-end',
   },
   buttonsContainer: {
     paddingBottom: 20,
