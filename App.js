@@ -106,26 +106,14 @@ export default function App() {
     }
   };
 
-  // Compute live result (evaluated) only after user begins entering the next operand
-  let liveResult = '';
-  if (previousValue !== null && operation) {
-    if (!waitingForOperand && display !== '') {
-      const current = parseFloat(display);
-      const res = calculate(previousValue, isNaN(current) ? 0 : current, operation);
-      if (!isFinite(res) || isNaN(res)) liveResult = 'Error';
-      else liveResult = Number.isInteger(res) ? String(res) : String(parseFloat(res.toFixed(8)).toString());
-    } else if (waitingForOperand && evaluatedResult !== null) {
-      const res = evaluatedResult;
-      liveResult = Number.isFinite(res) ? (Number.isInteger(res) ? String(res) : String(parseFloat(res.toFixed(8)).toString())) : 'Error';
-    }
-  }
-
-  // Main display text: show full expression if there's a pending operation, otherwise show the current input
+  // Main display text: show the expression as it grows; do not auto-compute while typing the next number
   const mainDisplayText = history
-    ? `${history}${!waitingForOperand ? ` ${display}` : ''}`
-    : (previousValue !== null && operation
-      ? `${previousValue} ${operation} ${!waitingForOperand ? display : ''}`.trim()
-      : display);
+    ? `${history}${!waitingForOperand && display ? ` ${display}` : ''}`
+    : display;
+
+  const liveResultText = (waitingForOperand && evaluatedResult !== null)
+    ? String(evaluatedResult)
+    : '';
 
   const Button = ({ onPress, title, style }) => (
     <TouchableOpacity
@@ -142,9 +130,18 @@ export default function App() {
       <StatusBar barStyle="light-content" />
       <View style={styles.calculator}>
         <View style={styles.displayContainer}>
-          <Text style={styles.display} numberOfLines={1} adjustsFontSizeToFit>{mainDisplayText}</Text>
-          {liveResult ? (
-            <Text style={styles.liveResult} numberOfLines={1} ellipsizeMode="tail">{liveResult}</Text>
+          <Text
+            style={styles.display}
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.35}
+          >
+            {mainDisplayText}
+          </Text>
+          {liveResultText ? (
+            <Text style={styles.liveResult} numberOfLines={1} ellipsizeMode="tail">
+              {liveResultText}
+            </Text>
           ) : null}
         </View>
 
