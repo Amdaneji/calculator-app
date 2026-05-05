@@ -90,7 +90,7 @@ export default function App() {
     }
   };
 
-  // Compute live expression and live result (e.g. "12 + 3 = 15")
+  // Compute live result (evaluated) only after user begins entering the next operand
   const liveResult = (previousValue !== null && operation && !waitingForOperand && display !== '')
     ? (() => {
       const current = parseFloat(display);
@@ -100,9 +100,10 @@ export default function App() {
     })()
     : '';
 
-  const expression = (previousValue !== null && operation)
-    ? `${previousValue} ${operation} ${!waitingForOperand ? display : ''}${liveResult ? ` = ${liveResult}` : ''}`.trim()
-    : '';
+  // Main display text: show full expression if there's a pending operation, otherwise show the current input
+  const mainDisplayText = (previousValue !== null && operation)
+    ? `${previousValue} ${operation} ${!waitingForOperand ? display : ''}`.trim()
+    : display;
 
   const Button = ({ onPress, title, style }) => (
     <TouchableOpacity
@@ -119,8 +120,10 @@ export default function App() {
       <StatusBar barStyle="light-content" />
       <View style={styles.calculator}>
         <View style={styles.displayContainer}>
-          <Text style={styles.expression} numberOfLines={1} ellipsizeMode="tail">{expression}</Text>
-          <Text style={styles.display} numberOfLines={1} adjustsFontSizeToFit>{display}</Text>
+          <Text style={styles.display} numberOfLines={1} adjustsFontSizeToFit>{mainDisplayText}</Text>
+          {liveResult ? (
+            <Text style={styles.liveResult} numberOfLines={1} ellipsizeMode="tail">{liveResult}</Text>
+          ) : null}
         </View>
 
         <View style={styles.buttonsContainer}>
@@ -243,14 +246,20 @@ const styles = StyleSheet.create({
     paddingTop: 24,
   },
   display: {
-    fontSize: 60,
+    fontSize: 72,
     color: '#fff',
-    fontWeight: '300',
+    fontWeight: '700',
   },
   expression: {
     fontSize: 18,
     color: '#bfbfbf',
     marginBottom: 6,
+    alignSelf: 'flex-end',
+  },
+  liveResult: {
+    fontSize: 22,
+    color: '#bfbfbf',
+    marginTop: 6,
     alignSelf: 'flex-end',
   },
   buttonsContainer: {
