@@ -41,7 +41,12 @@ export default function App() {
         const result = calculate(previousValue, inputValue, operation);
         setEvaluatedResult(result);
         setPreviousValue(result);
-        setHistory(`${previousValue} ${operation} ${display} ${nextOp}`);
+        // Keep full expression history visible; do not collapse to intermediate totals.
+        if (history) {
+          setHistory(`${history} ${display} ${nextOp}`);
+        } else {
+          setHistory(`${previousValue} ${operation} ${display} ${nextOp}`);
+        }
         setDisplay('');
       } else {
         // change the trailing operator in history
