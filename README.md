@@ -74,3 +74,13 @@ See [RELEASE_GUIDE.md](RELEASE_GUIDE.md) for the full publishing workflow.
 ## Notes
 
 The project is intentionally streamlined so it opens quickly and feels polished on a real device. If you want, I can next add screenshots, a changelog, or App Store-style store text.
+
+## Changelog
+
+### v1.1.0 — Live expression & operator preview
+
+- Live expression display shows the full arithmetic expression as you type (e.g. `12 + 3`).
+- Operator is shown immediately after selection so the user can confirm which operator is active.
+- Minor UI tweaks to improve readability on small screens.
+
+Download the latest APK from [Releases](https://github.com/Amdaneji/calculator-app/releases).

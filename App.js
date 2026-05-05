@@ -83,6 +83,11 @@ export default function App() {
     }
   };
 
+  // Compute live expression to show operator and next input (e.g. "12 + 3")
+  const expression = (previousValue !== null && operation)
+    ? (waitingForOperand ? `${previousValue} ${operation}` : `${previousValue} ${operation} ${display}`)
+    : '';
+
   const Button = ({ onPress, title, style }) => (
     <TouchableOpacity
       style={[styles.button, style]}
@@ -98,7 +103,8 @@ export default function App() {
       <StatusBar barStyle="light-content" />
       <View style={styles.calculator}>
         <View style={styles.displayContainer}>
-          <Text style={styles.display}>{display}</Text>
+          <Text style={styles.expression} numberOfLines={1} ellipsizeMode="tail">{expression}</Text>
+          <Text style={styles.display} numberOfLines={1} adjustsFontSizeToFit>{display}</Text>
         </View>
 
         <View style={styles.buttonsContainer}>
@@ -223,6 +229,13 @@ const styles = StyleSheet.create({
     fontSize: 60,
     color: '#fff',
     fontWeight: '300',
+  },
+  expression: {
+    fontSize: 20,
+    color: '#bfbfbf',
+    position: 'absolute',
+    top: 12,
+    right: 20,
   },
   buttonsContainer: {
     paddingBottom: 20,
