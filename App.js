@@ -116,9 +116,27 @@ export default function App() {
     ? `${history}${!waitingForOperand && display ? ` ${display}` : ''}`
     : display;
 
-  const liveResultText = (waitingForOperand && evaluatedResult !== null)
-    ? String(evaluatedResult)
-    : '';
+  const formatResult = (value) => {
+    if (value === null || value === undefined) return '';
+    if (!isFinite(value) || isNaN(value)) return 'Error';
+    return Number.isInteger(value)
+      ? String(value)
+      : String(parseFloat(value.toFixed(8)).toString());
+  };
+
+  const liveResultText = (() => {
+    if (previousValue === null || !operation) return '';
+
+    // Keep showing last evaluated subtotal immediately after operator press.
+    if (waitingForOperand) {
+      return formatResult(evaluatedResult);
+    }
+
+    // While typing next operand, continuously show preview of the new result.
+    const inputValue = parseFloat(display);
+    if (isNaN(inputValue)) return '';
+    return formatResult(calculate(previousValue, inputValue, operation));
+  })();
 
   const Button = ({ onPress, title, style }) => (
     <TouchableOpacity
