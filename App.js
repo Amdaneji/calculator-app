@@ -10,19 +10,6 @@ export default function App() {
   const [history, setHistory] = useState('');
   const [evaluatedResult, setEvaluatedResult] = useState(null);
 
-  if (__DEV__ && !global.__CALC_ERROR_HANDLER_INSTALLED__) {
-    global.__CALC_ERROR_HANDLER_INSTALLED__ = true;
-    const defaultHandler = global.ErrorUtils?.getGlobalHandler?.();
-    global.ErrorUtils?.setGlobalHandler?.((error, isFatal) => {
-      console.error('=== CALC_RUNTIME_ERROR_START ===');
-      console.error(`message: ${error?.message || 'Unknown error'}`);
-      console.error(`isFatal: ${String(isFatal)}`);
-      console.error(`stack: ${error?.stack || 'No stack available'}`);
-      console.error('=== CALC_RUNTIME_ERROR_END ===');
-      if (defaultHandler) defaultHandler(error, isFatal);
-    });
-  }
-
   const logRuntimeContext = (source, err) => {
     console.error('=== CALC_RUNTIME_ERROR_START ===');
     console.error(`source: ${source}`);
