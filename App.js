@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
 export default function App() {
@@ -152,123 +153,125 @@ export default function App() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" />
-      <View style={styles.calculator}>
-        <View style={styles.displayContainer}>
-          <Text
-            style={styles.display}
-            numberOfLines={1}
-            adjustsFontSizeToFit
-            minimumFontScale={0.35}
-          >
-            {mainDisplayText}
-          </Text>
-          {liveResultText ? (
-            <Text style={styles.liveResult} numberOfLines={1} ellipsizeMode="tail">
-              {liveResultText}
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="light-content" />
+        <View style={styles.calculator}>
+          <View style={styles.displayContainer}>
+            <Text
+              style={styles.display}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.35}
+            >
+              {mainDisplayText}
             </Text>
-          ) : null}
+            {liveResultText ? (
+              <Text style={styles.liveResult} numberOfLines={1} ellipsizeMode="tail">
+                {liveResultText}
+              </Text>
+            ) : null}
+          </View>
+
+          <View style={styles.buttonsContainer}>
+            <View style={styles.row}>
+              <Button
+                title="C"
+                onPress={handleClear}
+                style={styles.functionButton}
+              />
+              <Button
+                title="←"
+                onPress={handleBackspace}
+                style={styles.functionButton}
+              />
+              <Button
+                title="÷"
+                onPress={() => handleOperation('÷')}
+                style={styles.operationButton}
+              />
+              <Button
+                title="×"
+                onPress={() => handleOperation('×')}
+                style={styles.operationButton}
+              />
+            </View>
+
+            <View style={styles.row}>
+              <Button
+                title="7"
+                onPress={() => handleNumberPress(7)}
+              />
+              <Button
+                title="8"
+                onPress={() => handleNumberPress(8)}
+              />
+              <Button
+                title="9"
+                onPress={() => handleNumberPress(9)}
+              />
+              <Button
+                title="-"
+                onPress={() => handleOperation('-')}
+                style={styles.operationButton}
+              />
+            </View>
+
+            <View style={styles.row}>
+              <Button
+                title="4"
+                onPress={() => handleNumberPress(4)}
+              />
+              <Button
+                title="5"
+                onPress={() => handleNumberPress(5)}
+              />
+              <Button
+                title="6"
+                onPress={() => handleNumberPress(6)}
+              />
+              <Button
+                title="+"
+                onPress={() => handleOperation('+')}
+                style={styles.operationButton}
+              />
+            </View>
+
+            <View style={styles.row}>
+              <Button
+                title="1"
+                onPress={() => handleNumberPress(1)}
+              />
+              <Button
+                title="2"
+                onPress={() => handleNumberPress(2)}
+              />
+              <Button
+                title="3"
+                onPress={() => handleNumberPress(3)}
+              />
+              <Button
+                title="="
+                onPress={handleEquals}
+                style={styles.equalsButton}
+              />
+            </View>
+
+            <View style={styles.row}>
+              <Button
+                title="0"
+                onPress={() => handleNumberPress(0)}
+                style={styles.zeroButton}
+              />
+              <Button
+                title="."
+                onPress={handleDecimal}
+              />
+            </View>
+          </View>
         </View>
-
-        <View style={styles.buttonsContainer}>
-          <View style={styles.row}>
-            <Button
-              title="C"
-              onPress={handleClear}
-              style={styles.functionButton}
-            />
-            <Button
-              title="←"
-              onPress={handleBackspace}
-              style={styles.functionButton}
-            />
-            <Button
-              title="÷"
-              onPress={() => handleOperation('÷')}
-              style={styles.operationButton}
-            />
-            <Button
-              title="×"
-              onPress={() => handleOperation('×')}
-              style={styles.operationButton}
-            />
-          </View>
-
-          <View style={styles.row}>
-            <Button
-              title="7"
-              onPress={() => handleNumberPress(7)}
-            />
-            <Button
-              title="8"
-              onPress={() => handleNumberPress(8)}
-            />
-            <Button
-              title="9"
-              onPress={() => handleNumberPress(9)}
-            />
-            <Button
-              title="-"
-              onPress={() => handleOperation('-')}
-              style={styles.operationButton}
-            />
-          </View>
-
-          <View style={styles.row}>
-            <Button
-              title="4"
-              onPress={() => handleNumberPress(4)}
-            />
-            <Button
-              title="5"
-              onPress={() => handleNumberPress(5)}
-            />
-            <Button
-              title="6"
-              onPress={() => handleNumberPress(6)}
-            />
-            <Button
-              title="+"
-              onPress={() => handleOperation('+')}
-              style={styles.operationButton}
-            />
-          </View>
-
-          <View style={styles.row}>
-            <Button
-              title="1"
-              onPress={() => handleNumberPress(1)}
-            />
-            <Button
-              title="2"
-              onPress={() => handleNumberPress(2)}
-            />
-            <Button
-              title="3"
-              onPress={() => handleNumberPress(3)}
-            />
-            <Button
-              title="="
-              onPress={handleEquals}
-              style={styles.equalsButton}
-            />
-          </View>
-
-          <View style={styles.row}>
-            <Button
-              title="0"
-              onPress={() => handleNumberPress(0)}
-              style={styles.zeroButton}
-            />
-            <Button
-              title="."
-              onPress={handleDecimal}
-            />
-          </View>
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
