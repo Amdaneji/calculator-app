@@ -15,6 +15,7 @@ This creates a standalone APK. When the build completes, EAS will show a downloa
 ## Step 2: Download the APK
 
 Copy the download link from the EAS output, or visit:
+
 ```
 https://expo.dev/accounts/[your-account]/projects/[project-name]/builds
 ```
@@ -36,6 +37,7 @@ Users can now download the APK directly from the release page.
 ## Step 4: Share the Release Link
 
 Send users to:
+
 ```
 https://github.com/Amdaneji/calculator-app/releases
 ```
@@ -45,6 +47,7 @@ They can download the latest APK and install it on Android phones.
 ## Installing the APK on Android
 
 Users need to:
+
 1. Download the `.apk` file from the release
 2. Open it on their Android phone
 3. Tap "Install"
